@@ -1,0 +1,171 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</head>
+<style>
+ .card-header{
+   text-align:center;
+   margin:1px solid black;
+   padding:10px;
+   
+ }
+ .lead{
+  text-align:center;
+ }
+ .highlighted {
+  border: 2px solid #007bff;
+}
+.form-control-range{
+
+}
+
+</style>
+<h1 style="text-align:center">Pricing</h1>
+<p class="lead">Quickly build an effective pricing table for your potential customers with this<br> Bootstrap example. It's built with<br> default Bootstrap components and utilities with little customization.</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 plan" data-min-users="0" data-max-users="10">
+      <div class="card">
+       
+          <div class="card-header">
+		  <h4 class =my-0 font-weight-normal> Free</h4></div>
+          <p class="card-text">$0 / mo<br>
+		          10 users included<br>
+				  2 GB of storage<br>
+				  Email support<br>
+				  Help center access</p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#orderModal">Sign up for free</button>
+        </div>
+      
+    </div>
+
+     <div class="col-md-4 plan" data-min-users="10" data-max-users="20">
+      <div class="card">
+        <div class="card-header">
+          <h4 class =my-0 font-weight-normal>Pro</h4></div>
+          <p class="card-text">$ 15 / mo<br>
+		                      20 users included<br>
+							  10 GB of storage<br>
+							  Priority email support<br>
+							  Help center access<br></p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#orderModal">Get Started</button>
+        </div>
+      </div>
+
+  
+
+
+ <div class="col-md-4 plan" data-min-users="30" data-max-users="100">
+      <div class="card">
+        <div class="card-header">
+          <h4 class =my-0 font-weight-normal>Enterprise</h4></div>
+          <p class="card-text">$29 / mo<br>
+		                       30 users included<br>
+							   15 GB of storage<br>
+							   Phone and email support<br>
+							   Help center access<br></p>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#orderModal">Order Plan C</button>
+        </div>
+      </div>
+	  </div>
+    </div>
+	    </div>
+	</div>
+	<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Order Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="http://forms.maakeetoo.com" method="POST">
+          <div class="form-group">
+            <label for="firstname">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Order Comments</label>
+            <textarea class="form-control" id="message" rows="3" placeholder="Additional Comments"></textarea>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="formsub" class="btn btn-primary">Submit Order</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <label for="userRange"><h3>Number of Users:</h3></label>
+  <input type="range" class="form-control-range" id="userRange" min="0" max="100">
+</div>
+
+</html>
+<script>
+  $(document).ready(function () {
+    // Handler for showing the modal when "Order" button is clicked
+    $('.btn-primary').click(function () {
+      $('#orderModal').modal('show');
+    });
+  });
+
+  $(document).ready(function () {
+    // Get references to the plans and the user range input
+    const plans = $('.plan');
+    const userRange = $('#userRange');
+
+    // Event listener for the slider input
+    userRange.on('input', function () {
+      const selectedUsers = parseInt(this.value, 10);
+
+      // Iterate through plans and highlight the appropriate plan
+	  
+	  
+      plans.each(function () {
+        const plan = $(this);
+        const minUsers = parseInt(plan.data('min-users'), 10);
+        const maxUsers = parseInt(plan.data('max-users'), 10);
+
+        if (selectedUsers >= minUsers && selectedUsers <= maxUsers) {
+          plan.addClass('highlighted');
+        } else {
+          plan.removeClass('highlighted');
+        }
+		
+      });
+    });
+  });
+  document.getElementById("formsub").addEventListener("click",formsubmit);
+  function formsubmit(){
+  window.location.href="forms.maakeetoo.com/formapi/957";
+  }
+</script>
+<?php
+curl -H "Authorization: Bearer YM0M1YP3YSDEW0BDPE7XTMVC5" -X GET('forms.maakeetoo.com/formapi/957')
+
+if (isset($_GET['firstname']) && isset($_GET['email'])) {
+    $firstname = $_GET['firstname'];
+    $email = $_GET['email'];
+	$message = $_GET['message'];
+
+    // Process the data as needed
+    echo "Received Name:" $firstname"<br>";
+    echo "Received Email: "$email;
+	echo "Received Message:" $message;
+} else {
+    echo "Name and email are required.";
+}
+ ?>
+
